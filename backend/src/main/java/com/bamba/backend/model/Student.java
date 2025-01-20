@@ -12,14 +12,14 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String firstName;
-    private String lastname;
+    private String lastName;
     private String email;
     private String phoneNumber;
     private String address;
     
     public Student(int id, String firstName, String lastName, String email, String phoneNumber, String address) {
         this.firstName = firstName;
-        this.lastname = lastName;
+        this.lastName = lastName;
         this.address = address;
     }
 
@@ -43,11 +43,11 @@ public class Student {
     }
 
     public String getLastname() {
-        return lastname;
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {

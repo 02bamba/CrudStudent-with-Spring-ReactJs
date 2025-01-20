@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import com.bamba.backend.model.Student;
@@ -44,6 +43,16 @@ public class StudentController {
         }else return null;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getStudentById(@PathVariable String id) {
+
+        Optional<Student> Student = studentService.getStudentById(id);
+        if (Student == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Etudiant non trouvé");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(Student);
+    }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateStudent(@RequestBody Student student, @PathVariable String id) {
 
@@ -62,11 +71,10 @@ public class StudentController {
 
     @DeleteMapping("/delete/{id}")
 public ResponseEntity<?> deleteStudent(@PathVariable String id) {
-    // Vérifiez si l'étudiant existe
+    
     Optional<Student> existingStudent = studentService.getStudentById(id);
     if (existingStudent == null) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("Étudiant avec l'ID " + id + " non trouvé.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Étudiant avec l'ID " + id + " non trouvé.");
     }
 
     studentService.deleteStudent(id);
